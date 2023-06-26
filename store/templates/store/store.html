@@ -1,5 +1,8 @@
 {% extends 'store/main.html' %}
+{% load static %}
 {% block content %}
+
+<img class="img-fluid w-100" src="{% static 'images/mack-banner.jpg' %}" alt="" style="height: 450px;">
 
 <div class="row">
   {% for product in products %}
@@ -9,9 +12,9 @@
     <div class="box-element product">
       <h6><strong>{{product.name}}</strong></h6>
       <hr>
-      <button class="btn btn-outline-secondary add-btn update-cart" data-product="{{product.id}}" data-action="add">Add to Card</button>
+      <button class="btn btn-outline-secondary add-btn update-cart" data-product="{{product.id}}" data-action="add">ເພີ່ມໃສ່ກະຕ້າ</button>
       <a class="btn btn-outline-success" href="#">View</a>
-      <h4 style="display: inline; float: right;">${{product.price|floatformat:2}}</h4>
+      <h4 style="display: inline; float: right;">{{product.price|floatformat:2}} kip</h4>
     </div>
   </div>
   {% endfor %}

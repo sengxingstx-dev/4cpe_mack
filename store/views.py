@@ -8,7 +8,8 @@ from .models import (
     Product,
     Order,
     OrderItem,
-    ShippingAddress
+    ShippingAddress,
+    ConfirmPayment
 )
 
 
@@ -107,6 +108,11 @@ def process_order(request):
             city=data['shipping']['city'],
             state=data['shipping']['state'],
             zipcode=data['shipping']['zipcode'],
+        )
+        ConfirmPayment.objects.create(
+            total=total,
+            comment=data['shipping']['comment'],
+            payment_photo=data['shipping']['qr']
         )
 
     return JsonResponse('Payment complete!', safe=False)

@@ -57,11 +57,11 @@
     console.log('Cart:', cart)
   </script>
 </head>
-<body>
+<body class="lao">
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="{% url 'store' %}">Ecom</a>
+    <a class="navbar-brand" href="{% url 'store' %}">ແສງພະຈັນການພິມ</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -69,12 +69,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'store' %}">Store <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{% url 'store' %}">ຫນ້າຫຼັກ <span class="sr-only">(current)</span></a>
         </li>
       </ul>
       <div class="form-inline my-2 my-lg-0">
-        <a href="#" class="btn btn-warning">Login</a>
-        
+        {% if request.user.is_authenticated %}
+        <p style="color: white;">Hello, {{ request.user }}</p>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-warning">ລ໋ອກອິນ</a>
+        {% endif %}
         <a href="{% url 'cart' %}">
           <img src="{% static 'images/cart.png' %}" id="cart-icon" alt="">
         </a>
@@ -86,7 +89,7 @@
   <!-- End Navbar -->
 
   <!-- body -->
-  <div class="container">
+  <div class="container lao">
     {% block content %}
     {% endblock content %}
   </div>

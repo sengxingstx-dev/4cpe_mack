@@ -18,7 +18,7 @@
 
         <div id="shipping-info">
           <hr>
-          <p>Shipping Information</p>
+          <p>ລາຍລະອຽດການຈັດສົ່ງ</p>
           <hr>
           <div class="form-field">
             <input type="text" name="address" placeholder="Address...">
@@ -35,34 +35,44 @@
           <div class="form-field">
             <input type="text" name="country" placeholder="Country...">
           </div>
+          <br>
+          <div class="form-field">
+            <img src="{% static 'images/mack-qr.jpg' %}" alt="not found" width="200">
+          </div>
+          <div class="form-group">
+            <div class="col"><label>ເລືອກຮູບສະລິບໂອນເງິນ</label>
+              <input type="file" id="qr" name="qr" placeholder="Report Attachment"
+                enctype="multipart/form-data">
+            </div>
+          </div>
         </div>
         <hr>
-        <input type="submit" id="form-button" class="btn btn-success btn-block" value="Continue">
+        <input type="submit" id="form-button" class="btn btn-success btn-block" value="ຕໍ່ໄປ">
       </form>
     </div>
     <br>
     <div class="box-element hidden" id="payment-info">
       <small>Paypal Options</small>
-      <button id="make-payment">Make Payment</button>
+      <button class="btn btn-success" id="make-payment">ຊຳລະ</button>
     </div>
   </div>
 
   <div class="col-lg-6">
     <div class="box-element">
-      <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+      <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; ກັບຄືນໄປທີ່ກະຕ່າ</a>
       <hr>
-      <h3>Order Summary</h3>
+      <h3>ສະຫຼຸບການສັ່ງຊື້</h3>
       <hr>
       {% for item in items %}
       <div class="cart-row">
         <div style="flex:2"><img class="row-image" src="{{item.product.image_url}}"></div>
         <div style="flex:2"><p>{{item.product.name}}</p></div>
-        <div style="flex:1"><p>${{item.product.price|floatformat:2}}</p></div>
-        <div style="flex:1"><p>x{{item.quantity}}</p></div>
+        <div style="flex:1"><p>{{item.product.price|floatformat:2}} kip</p></div>
+        <div style="flex:1"><p>x {{item.quantity}}</p></div>
       </div>
       {% endfor %}
-      <h5>Items: {{order.get_cart_items}}</h5>
-      <h5>Total: ${{order.get_cart_total|floatformat:2}}</h5>
+      <h5>ລາຍການທັງໝົດ: {{order.get_cart_items}}</h5>
+      <h5>ລາຄາລວມ: {{order.get_cart_total|floatformat:2}} kip</h5>
     </div>
   </div>
 </div>
@@ -114,13 +124,23 @@
       'city': null,
       'state': null,
       'zipcode': null,
+      'total': null,
+      'comment': null,
+      'qr': null,
     }
+
+    let qrdata = new FormData();
+
 
     if(shipping != 'False') {
       shippingInfo.address = form.address.value
       shippingInfo.city = form.city.value
       shippingInfo.state = form.state.value
       shippingInfo.zipcode = form.zipcode.value
+      shippingInfo.total = total
+      shippingInfo.comment = 'dfdd'
+      shippingInfo.qr = form.qr.value;
+      // shippingInfo.qr = form.qr.files[0];
     }
 
     if(user == 'AnonymousUser') {

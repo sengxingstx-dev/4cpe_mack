@@ -1,5 +1,15 @@
+@font-face {
+  font-family: 'phetsarath-ot';
+  src: url('../fonts/NotoSansLao-Regular.ttf');
+}
+
+.lao {
+  font-family: 'phetsarath-ot';
+}
+
 body{
 	background-color: hsl(0, 0%, 98%);
+	font-family: 'phetsarath-ot';
 }
 
 h1,h2,h3,h4,h5,h6{
@@ -15,7 +25,7 @@ h1,h2,h3,h4,h5,h6{
 
 .thumbnail{
 	width: 100%;
-	height: 200px;
+	/* height: 200px; */
 	-webkit-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
     -moz-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
     box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);

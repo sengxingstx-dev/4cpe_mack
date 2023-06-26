@@ -5,16 +5,16 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="box-element">
-      <a class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
+      <a class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; ກັບຄືນ</a>
 
       <br><br>
 
       <table class="table">
         <tr>
-          <th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
-          <th><h5>Total: <strong>${{order.get_cart_total|floatformat:2}}</strong></h5></th>
+          <th><h5>ລາຍການ: <strong>{{order.get_cart_items}}</strong></h5></th>
+          <th><h5>ລວມ: <strong>{{order.get_cart_total|floatformat:2}} kip</strong></h5></th>
           <th>
-            <a style="float: right; margin: 5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+            <a style="float: right; margin: 5px;" class="btn btn-success" href="{% url 'checkout' %}">ເຊັກເອົ້າ</a>
           </th>
         </tr>
       </table>
@@ -23,16 +23,16 @@
     <div class="box-element">
       <div class="cart-row">
         <div style="flex: 2;"></div>
-        <div style="flex: 2;"><strong>Item</strong></div>
-        <div style="flex: 1;"><strong>Price</strong></div>
-        <div style="flex: 1;"><strong>Quantity</strong></div>
-        <div style="flex: 1;"><strong>Total</strong></div>
+        <div style="flex: 2;"><strong>ລາຍການ</strong></div>
+        <div style="flex: 1;"><strong>ລາຄາ</strong></div>
+        <div style="flex: 1;"><strong>ຈຳນວນ</strong></div>
+        <div style="flex: 1;"><strong>ລວມ</strong></div>
       </div>
       {% for item in items %}
       <div class="cart-row">
         <div style="flex: 2;"><img class="row-image" src="{{item.product.image_url}}" alt=""></div>
         <div style="flex: 2;">{{item.product.name}}</div>
-        <div style="flex: 1;">${{item.product.price|floatformat:2}}</div>
+        <div style="flex: 1;">{{item.product.price|floatformat:2}} kip</div>
         <div style="flex: 1;">
           <p class="quantity">{{item.quantity}}</p>
           <div class="quantity">
@@ -40,7 +40,7 @@
             <img class="chg-quantity update-cart" data-product="{{item.product.id}}" data-action="remove" src="{% static 'images/arrow-down.png' %}" alt="">
           </div>
         </div>
-        <div style="flex: 1;">${{item.get_total}}</div>
+        <div style="flex: 1;">{{item.get_total}} kip</div>
       </div>
       {% endfor %}
     </div>
