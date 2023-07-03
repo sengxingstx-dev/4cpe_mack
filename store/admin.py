@@ -5,7 +5,7 @@ from .models import (
     Order,
     OrderItem,
     ShippingAddress,
-    ConfirmPayment
+    ConfirmPayment, Income, Outcome
 )
 
 
@@ -15,3 +15,5 @@ admin.site.register(Order)
 admin.site.register(OrderItem)
 admin.site.register(ShippingAddress)
 admin.site.register(ConfirmPayment)
+admin.site.register(Income)
+admin.site.register(Outcome)

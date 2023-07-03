@@ -21,19 +21,29 @@
           <p>ລາຍລະອຽດການຈັດສົ່ງ</p>
           <hr>
           <div class="form-field">
-            <input type="text" name="address" placeholder="Address...">
+            <input type="text" name="address" placeholder="ທີ່ຢູ່...">
           </div>
           <div class="form-field">
-            <input type="text" name="city" placeholder="City...">
+            <input type="text" name="city" placeholder="ເມືອງ...">
           </div>
           <div class="form-field">
-            <input type="text" name="state" placeholder="State...">
+            <input type="text" name="state" placeholder="ແຂວງ...">
           </div>
           <div class="form-field">
-            <input type="text" name="zipcode" placeholder="Zipcode...">
+            <input type="text" name="zipcode" placeholder="ລະຫັດຊີບໂຄດ...">
           </div>
           <div class="form-field">
-            <input type="text" name="country" placeholder="Country...">
+            <input type="text" name="tel" placeholder="ເບີໂທ...">
+          </div>
+          <div class="form-field">
+            <input type="text" name="country" placeholder="ປະເທດ...">
+          </div>
+          <div class="form-field">
+            <select id="" class="form-control" name="delivery" required>
+              <option value="" selected disabled>ຂົນສົ່ງໂດຍ</option>
+              <option value="Houng Ah loun" selected>ຮຸ່ງອາລຸນ</option>
+              <option value="Ah nou sit">ອານຸສິດ</option>
+            </select>
           </div>
           <br>
           <div class="form-field">
@@ -127,6 +137,8 @@
       'total': null,
       'comment': null,
       'qr': null,
+      'tel': null,
+      'delivery': null
     }
 
     let qrdata = new FormData();
@@ -141,6 +153,8 @@
       shippingInfo.comment = 'dfdd'
       shippingInfo.qr = form.qr.value;
       // shippingInfo.qr = form.qr.files[0];
+      shippingInfo.tel = form.tel.value;
+      shippingInfo.delivery = form.delivery.value;
     }
 
     if(user == 'AnonymousUser') {

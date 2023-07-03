@@ -89,12 +89,19 @@ class OrderItem(models.Model):
 
 
 class ShippingAddress(models.Model):
+    DELIVERY_BY = (
+        ('Houng ah loun', 'Houng ah loun'),
+        ('Ah nou sit', 'Ah nou sit')
+    )
+
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     zipcode = models.CharField(max_length=50)
+    tel = models.CharField(max_length=12, null=True, blank=True)
+    delivery = models.CharField(max_length=30, choices=DELIVERY_BY, default='Houng ah loun', null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -109,3 +116,21 @@ class ConfirmPayment(models.Model):
 
     def __str__(self):
         return f'{self.total}'
+
+
+class Income(models.Model):
+    price = models.FloatField(default=0)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_received = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.price}'
+
+
+class Outcome(models.Model):
+    price = models.FloatField(default=0)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_received = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.price}'
