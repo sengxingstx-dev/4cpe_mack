@@ -3,15 +3,48 @@
 {% block content %}
 
 <div class="row">
-  {% for customer in customers %}
-  <div class="col-lg-4">
-    <!-- image_url from class customer -->
-    <div class="box-element customer">
-      <a href="{% url 'customer-orders' customer.id %}"><h6><strong>{{customer.name}}</strong></h6></a>
-      <hr>
-    </div>
+  <div class="col-lg-12">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ໄອດີ</th>
+          <th>ຊື່</th>
+          <th>ນາມສະກຸນ</th>
+          <th>ວັນເດືອນປີເກີດ</th>
+          <th>ເພດ</th>
+          <th>ບ້ານ</th>
+          <th>ເມືອງ</th>
+          <th>ແຂວງ</th>
+          <th>ປະເທດ</th>
+          <th>ທີ່ຢູ່</th>
+          <th>ເບີໂທ</th>
+          <th>ອີເມວ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+        <tr>
+          <td>{{ customer.id }}</td>
+          <td>
+            <a href="{% url 'customer-orders' customer.id %}">
+              {{ customer.name }}
+            </a>
+          </td>
+          <td>{{ customer.sirname }}</td>
+          <td>{{ customer.birthday }}</td>
+          <td>{{ customer.sex }}</td>
+          <td>{{ customer.village }}</td>
+          <td>{{ customer.district }}</td>
+          <td>{{ customer.province }}</td>
+          <td>{{ customer.contry }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>{{ customer.email }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-  {% endfor %}
-
 </div>
+
 {% endblock content %}

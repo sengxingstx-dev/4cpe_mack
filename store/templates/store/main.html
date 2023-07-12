@@ -71,15 +71,19 @@
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'store' %}">ຫນ້າຫຼັກ <span class="sr-only">(current)</span></a>
         </li>
+        {% if request.user.is_superuser or request.user.is_staff %}
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'customers' %}">ລູກຄ້າ <span class="sr-only">(current)</span></a>
         </li>
+        {% endif %}
       </ul>
       <div class="form-inline my-2 my-lg-0">
         {% if request.user.is_authenticated %}
-        <p style="color: white;">Hello, {{ request.user }}</p>
+        <!-- <p style="color: white; margin-right: 25px;">{{ request.user }}</p> -->
+        <a href="{% url 'logout' %}" class="btn btn-danger">ອອກຈາກລະບົບ</a>
         {% else %}
-        <a href="{% url 'login' %}" class="btn btn-warning">ລ໋ອກອິນ</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-warning mr-2">ລ໋ອກອິນ</a>
+        <a href="{% url 'registration' %}" class="btn btn-outline-warning">ສະມັກສະມາຊິກ</a>
         {% endif %}
         <a href="{% url 'cart' %}">
           <img src="{% static 'images/cart.png' %}" id="cart-icon" alt="">

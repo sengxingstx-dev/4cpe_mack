@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 import json
 import datetime
@@ -13,6 +13,19 @@ from .models import (
     ConfirmPayment,
     Income, Outcome,
 )
+from .forms import UserForm
+
+
+def registration(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserForm()
+    
+    return render(request, 'registration/signup.html', {'form': form})
 
 
 def store(request):
