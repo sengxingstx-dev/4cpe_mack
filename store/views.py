@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import json
 import datetime
+from django.contrib.auth.models import User
 from .utils import cookie_cart, cart_data, guest_order
 from .models import (
     Customer,
@@ -123,3 +124,28 @@ def process_order(request):
         )
 
     return JsonResponse('Payment complete!', safe=False)
+
+
+def customers(request):
+    customers = Customer.objects.all()
+    context = {
+        'customers': customers,
+    }
+    return render(request, 'store/customers.html', context)
+
+
+# def customer_orders(request, pk):
+#     try:
+#         customer = User.objects.get(id=pk)
+#         orders = Order.objects.filter(customer=customer)
+#         return render(request, 'store/customer_orders.html', {'customer': customer, 'orders': orders})
+#     except User.DoesNotExist:
+#         # Handle case when customer with given ID doesn't exist
+#         # You can redirect to an error page or return an appropriate response
+#         return HttpResponse('<h1>Customer not found</h1>')
+
+def customer_orders(request, pk):
+    # user = User.objects.get(id=pk)
+    customer = Customer.objects.get(id=pk)
+    orders = Order.objects.filter(customer=customer)
+    return render(request, 'store/customer_orders.html', {'customer': customer, 'orders': orders})

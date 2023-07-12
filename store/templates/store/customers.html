@@ -1,0 +1,17 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+  {% for customer in customers %}
+  <div class="col-lg-4">
+    <!-- image_url from class customer -->
+    <div class="box-element customer">
+      <a href="{% url 'customer-orders' customer.id %}"><h6><strong>{{customer.name}}</strong></h6></a>
+      <hr>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+  <div class="col-lg-12">
+    <h2>Orders for {{ customer.name }}</h2>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  {% for order in orders %}
+  <div class="col-lg-4">
+    <!-- Display order details -->
+    <div class="box-element order">
+      <h6><strong>Order ID: {{ order.id }}</strong></h6>
+      <p>Order Date: {{ order.date_ordered }}</p>
+      <!-- Additional order details can be displayed here -->
+      <hr>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}
