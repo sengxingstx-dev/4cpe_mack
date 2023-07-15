@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 import json
 import datetime
+from django.contrib import messages
 from django.contrib.auth.models import User
 from .utils import cookie_cart, cart_data, guest_order
 from .models import (
@@ -13,6 +14,7 @@ from .models import (
     ConfirmPayment,
     Income, Outcome,
 )
+from . import forms
 from .forms import UserForm
 
 
@@ -26,6 +28,10 @@ def registration(request):
         form = UserForm()
     
     return render(request, 'registration/signup.html', {'form': form})
+
+
+def dashboard(request):
+    return render(request, 'dashboard/main.html')
 
 
 def store(request):
@@ -139,12 +145,100 @@ def process_order(request):
     return JsonResponse('Payment complete!', safe=False)
 
 
+def orders(request):
+    orders = Order.objects.all()
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'dashboard/orders.html', context)
+
+
+def edit_order(request, pk):
+    order = Order.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = forms.OrderForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('orders')
+    else:
+        form = forms.OrderForm(instance=order)
+        print(form.errors)
+    
+    return render(request, 'dashboard/edit_order.html', {'form': form})
+
+
+def delete_order(request, pk):
+    try:
+        order = Order.objects.get(pk=pk)
+        order.delete()
+    except Order.DoesNotExist:
+        messages.error(request, 'Order does not exist.')
+        return redirect('store')  # Replace 'store' with the appropriate URL name for your store page
+
+    # Handle the logic for deleting the order
+    # ...
+
+    # Redirect to a success page or render a template
+    return redirect('orders')  # Replace 'store' with the appropriate URL name for your store page
+
+
 def customers(request):
     customers = Customer.objects.all()
     context = {
         'customers': customers,
     }
-    return render(request, 'store/customers.html', context)
+    return render(request, 'dashboard/customers.html', context)
+
+
+def edit_customer(request, pk):
+    customer = Customer.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = forms.CustomerForm(request.POST, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('customers')
+    else:
+        form = forms.CustomerForm(instance=customer)
+        print(form.errors)
+    
+    return render(request, 'dashboard/edit_customer.html', {'form': form})
+
+
+def products(request):
+    products = Product.objects.all()
+    context = {
+        'products': products,
+    }
+    return render(request, 'dashboard/products.html', context)
+
+
+def edit_product(request, pk):
+    product = Product.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = forms.ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('products')
+    else:
+        form = forms.ProductForm(instance=product)
+        print(form.errors)
+    
+    return render(request, 'dashboard/edit_product.html', {'form': form})
+
+
+def delete_product(request, pk):
+    try:
+        product = Product.objects.get(pk=pk)
+        product.delete()
+    except Product.DoesNotExist:
+        messages.error(request, 'Product does not exist.')
+        return redirect('products')
+
+    return redirect('products')
+
 
 
 # def customer_orders(request, pk):
@@ -161,4 +255,4 @@ def customer_orders(request, pk):
     # user = User.objects.get(id=pk)
     customer = Customer.objects.get(id=pk)
     orders = Order.objects.filter(customer=customer)
-    return render(request, 'store/customer_orders.html', {'customer': customer, 'orders': orders})
+    return render(request, 'dashboard/customer_orders.html', {'customer': customer, 'orders': orders})

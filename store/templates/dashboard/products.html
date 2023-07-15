@@ -1,0 +1,49 @@
+{% extends 'dashboard/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row border">
+  <div class="col-lg-12">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>ໄອດີ</th>
+          <th>ລະຫັດສິນຄ້າ</th>
+          <th>ຊື່</th>
+          <th>ລາຄາ</th>
+          <th>ລາຍລະອຽດ</th>
+          <th>ຮູບພາບ</th>
+          <th>ຈຳນວນ</th>
+          <th colspan="2">ການຈັດການ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <td>{{ product.id }}</td>
+          <td>{{ product.product_code }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.detail }}</td>
+          <td>{{ product.img }}</td>
+          <td>{{ product.amount }}</td>
+          <td>
+            <a href="{% url 'edit-product' product.pk %}">
+              <button type="button" class="btn btn-warning">ແກ້ໄຂ</button>
+            </a>
+          </td>
+          <td>
+            <a href="{% url 'delete-product' product.pk %}">
+              <button type="button" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this order?')">
+                ລົບ
+              </button>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock content %}
