@@ -71,9 +71,15 @@
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'store' %}">ຫນ້າຫຼັກ <span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'all-products' %}">ສິນຄ້າທັງໝົດ <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'contact' %}">ຕິດຕໍ່ <span class="sr-only">(current)</span></a>
+        </li>
         {% if request.user.is_superuser or request.user.is_staff %}
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'dashboard' %}">ແອັດມິນ <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{% url 'products' %}">ແອັດມິນ <span class="sr-only">(current)</span></a>
         </li>
         {% endif %}
       </ul>
@@ -96,7 +102,7 @@
   <!-- End Navbar -->
 
   <!-- body -->
-  <div class="container lao mb-4" style="margin-top: 80px;">
+  <div class="container-fluid lao mb-4" style="margin-top: 80px;">
     {% block content %}
     {% endblock content %}
   </div>

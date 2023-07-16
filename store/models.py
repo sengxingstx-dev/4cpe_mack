@@ -28,7 +28,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     digital = models.BooleanField(default=False)
     detail = models.TextField(null=True, blank=True)
-    img = models.ImageField(upload_to="products/", null=True)
+    img = models.ImageField(upload_to="products/", null=True, blank=True)
     amount = models.IntegerField(default=0)
 
     def __str__(self):
@@ -121,7 +121,8 @@ class ConfirmPayment(models.Model):
 
 class Income(models.Model):
     price = models.FloatField(default=0)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    user_id = models.CharField(max_length=50, null=True, blank=True)
     date_received = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

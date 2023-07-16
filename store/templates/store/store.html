@@ -4,20 +4,26 @@
 
 <img class="img-fluid w-100" src="{% static 'images/mack-banner.jpg' %}" alt="" style="height: 450px;">
 
-<div class="row">
-  {% for product in products %}
-  <div class="col-lg-4">
-    <!-- image_url from class Product -->
-    <img class="thumbnail" src="{{product.image_url}}" alt="">
-    <div class="box-element product">
-      <h6><strong>{{product.name}}</strong></h6>
-      <hr>
-      <button class="btn btn-outline-secondary add-btn update-cart" data-product="{{product.id}}" data-action="add">ເພີ່ມໃສ່ກະຕ່າ</button>
-      <!-- <a class="btn btn-outline-success" href="#">View</a> -->
-      <h4 style="display: inline; float: right;">{{product.price|floatformat:2}} kip</h4>
+<div class="container">
+  <div class="row">
+    {% for random_six_product in random_six_products %}
+    <div class="col-lg-4">
+      <!-- image_url from class random_six_product -->
+      <img class="thumbnail" src="{{random_six_product.image_url}}" alt="">
+      <div class="box-element random_six_product">
+        <h6><strong>{{random_six_product.name}}</strong></h6>
+        <hr>
+        <button class="btn btn-outline-secondary add-btn update-cart" data-random_six_product="{{random_six_product.id}}" data-action="add">ເພີ່ມໃສ່ກະຕ່າ</button>
+        <!-- <a class="btn btn-outline-success" href="#">View</a> -->
+        <h4 style="display: inline; float: right;">{{random_six_product.price|floatformat:2}} kip</h4>
+      </div>
     </div>
+    {% endfor %}
+    <br><br>
+    <a href="{% url 'all-products' %}">
+      <button type="button" class="btn btn-success">ເບີ່ງສິນຄ້າທັງໝົດ</button>
+    </a>
+  
   </div>
-  {% endfor %}
-
 </div>
 {% endblock content %}

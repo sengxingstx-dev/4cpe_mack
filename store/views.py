@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 import json
 import datetime
+import random
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .utils import cookie_cart, cart_data, guest_order
@@ -22,7 +23,12 @@ def registration(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_user = form.save()
+
+            customer = Customer.objects.create(
+                user=new_user
+            )
+
             return redirect('login')
     else:
         form = UserForm()
@@ -34,16 +40,36 @@ def dashboard(request):
     return render(request, 'dashboard/main.html')
 
 
+def contact(request):
+    return render(request, 'store/contact.html')
+
+
 def store(request):
     data = cart_data(request)
     cart_items = data['cart_items']
 
     products = Product.objects.all()
+    random_six_products = random.sample(list(products), 6)
     context = {
         'products': products,
+        'random_six_products': random_six_products,
         'cart_items': cart_items
     }
     return render(request, 'store/store.html', context)
+
+
+def all_products(request):
+    data = cart_data(request)
+    cart_items = data['cart_items']
+
+    products = Product.objects.all()
+    random_six_products = random.sample(list(products), 6)
+    context = {
+        'products': products,
+        'random_six_products': random_six_products,
+        'cart_items': cart_items
+    }
+    return render(request, 'store/all_products.html', context)
 
 
 def cart(request):
@@ -139,7 +165,7 @@ def process_order(request):
         )
         Income.objects.create(
             price=total,
-            user_id=request.user
+            user_id=data['form']['name']
         )
 
     return JsonResponse('Payment complete!', safe=False)
@@ -214,11 +240,24 @@ def products(request):
     return render(request, 'dashboard/products.html', context)
 
 
+def add_product(request):
+    if request.method == 'POST':
+        form = forms.ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('products')
+    else:
+        form = forms.ProductForm()
+        print(form.errors)
+    
+    return render(request, 'dashboard/add_product.html', {'form': form})
+
+
 def edit_product(request, pk):
     product = Product.objects.get(id=pk)
 
     if request.method == 'POST':
-        form = forms.ProductForm(request.POST, instance=product)
+        form = forms.ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
             return redirect('products')
