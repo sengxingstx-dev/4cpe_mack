@@ -18,6 +18,13 @@
       <p>ວັນທີ່ສັ່ງຊື້: {{ order.date_ordered }}</p>
       <!-- Additional order details can be displayed here -->
       <hr>
+      <!-- Display order items -->
+      <h6><strong>ລາຍການສັ່ງຊື່:</strong></h6>
+      <ul>
+        {% for order_item in order.orderitem_set.all %}
+        <li>{{ order_item.product.name }} - ຈຳນວນ: {{ order_item.quantity }}</li>
+        {% endfor %}
+      </ul>
     </div>
   </div>
   {% endfor %}
